@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-describe('App', () => {
+describe('App common get/find/query', () => {
   it('get by Text', () => {
     render(<App />)
 		const msg = screen.getByText(/hello/i);
@@ -31,4 +31,19 @@ describe('App', () => {
 		const place = screen.getByPlaceholderText(/user/i);
 		expect(place).toBeInTheDocument();
 	})
+})
+
+describe('App fireEvent', () => {
+  it('fireEvent Text', async () => {
+    render(<App />)
+		fireEvent.change(screen.getAllByRole("textbox")[1], {
+			target: {value: "React"}
+		})
+
+		screen.debug();
+		const search = screen.getByTestId("search1");
+		expect(search).toBeInTheDocument();
+
+  })
+
 })
